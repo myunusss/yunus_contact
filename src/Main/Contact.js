@@ -142,7 +142,7 @@ class Contact extends Component {
                       visibleModalEditContact: false
                     }, () => this.props.getDetailContact(val))
                   }
-                }, 300);
+                }, 500);
               })
             }}
             onCancel={() => this.setState({visibleModalEditContact: false})}

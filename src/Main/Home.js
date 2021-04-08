@@ -134,7 +134,7 @@ class Home extends Component {
                       visibleModalCreateContact: false
                     }, () => this.props.getDataContact())
                   }
-                }, 300);
+                }, 500);
               })
             }}
             onCancel={() => this.setState({visibleModalCreateContact: false})}
