@@ -12,6 +12,7 @@ const mapStateToProps = (state, props) => {
   return {
     counter: state.counter,
     contacts: state.contactReducer.contacts,
+    loading: state.contactReducer.loading
   }
 };
 
@@ -38,13 +39,12 @@ class Home extends Component {
     super(props)
     this.state = {
       refresh: false,
-      loading: false,
+      loadingForm: false,
       visibleModalCreateContact: false
     }
   }
 
   componentDidMount() {
-    this.setState({loading: true})
     this.props.getDataContact()
   }
 
@@ -84,7 +84,7 @@ class Home extends Component {
             </View>
           }
           ListEmptyComponent={() => {
-            if (this.state.loading) {
+            if (this.props.loading) {
               return(
                 <LoadingIndicator/>
               )
@@ -125,14 +125,16 @@ class Home extends Component {
           <FormContact
             title={'Create Contact'}
             contact={{firstName: '', lastName: '', age: '0', photo: null}}
+            loading={this.props.loading}
             onSubmit={(val) => {
               this.props.createNewContact(val).then((res) => {
-                this.setState({
-                  visibleModalCreateContact: false
-                })
                 setTimeout(() => {
-                  this.props.getDataContact()
-                }, 500);
+                  if (this.props.loading === false) {
+                    this.setState({
+                      visibleModalCreateContact: false
+                    }, () => this.props.getDataContact())
+                  }
+                }, 300);
               })
             }}
             onCancel={() => this.setState({visibleModalCreateContact: false})}

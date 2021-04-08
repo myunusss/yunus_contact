@@ -6,7 +6,6 @@ import { Actions } from 'react-native-router-flux';
 const SplashPage = () => {
   // COMPONENTDIDMOUNT
   useEffect(() => {
-    console.log("COMPONENT DID MOUNT")
     setTimeout(() => {
       Actions.reset('home')
     }, 1000);
@@ -14,13 +13,13 @@ const SplashPage = () => {
   
   //COMPONENTDIDUPDATE
   useEffect(() => {
-    console.log('COMPONENT DID UPDATE');
+    // return value
   })
 
   //COMPONENTWILLUNMOUNT
   useEffect(() => {
     return() => {
-      console.log('COMPONENT WILL UNMOUNT 2');
+      // value
     }
   }, [])
 

@@ -1,17 +1,15 @@
 import React from 'react';
 import { View, Text, StyleSheet, ActivityIndicator } from "react-native";
-import { useEffect } from 'react';
-import { Actions } from 'react-native-router-flux';
 
 const LoadingIndicator = () => {
   return(
     <View style={styles.container}>
       <ActivityIndicator
-        size={'large'}
+        size={'small'}
         color='#ccc'
       />
       <Text style={styles.infoText}>
-        Memuat data
+        Please wait
       </Text>
     </View>
   )
@@ -21,7 +19,6 @@ export default LoadingIndicator;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     padding: 20

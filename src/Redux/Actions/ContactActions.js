@@ -3,25 +3,31 @@ export const CREATE_CONTACT = 'CREATE_CONTACT';
 export const EDIT_CONTACT = 'EDIT_CONTACT';
 export const DELETE_CONTACT = 'DELETE_CONTACT';
 export const DETAIL_CONTACT = 'DETAIL_CONTACT';
+export const LOADING_DATA = 'LOADING_DATA';
 
 import Axios from 'axios';
 import { apiConfig } from '../../Core/Settings';
 
 export function getContact() {
-  return (dispatch) => {
+  return function (dispatch) {
+    dispatch({
+      type: LOADING_DATA,
+      loading: true
+    })
+    
     return Axios.get(`${apiConfig.baseUrl}contact`)
     .then((res) => {
-      console.log(res)
       dispatch({
         type: GET_CONTACT,
         contacts: res.data.data,
+        loading: false
       });
     })
     .catch((err) => {
-      console.log('err', err)
       dispatch({
         type: GET_CONTACT,
         contacts: null,
+        loading: false
       });
     })
   }
@@ -29,19 +35,24 @@ export function getContact() {
 
 export function getDetailContact(payload) {
   return (dispatch) => {
-    Axios.get(`${apiConfig.baseUrl}contact/${payload.id}`)
+    dispatch({
+      type: LOADING_DATA,
+      loading: true
+    })
+
+    return Axios.get(`${apiConfig.baseUrl}contact/${payload.id}`)
     .then((res) => {
-      console.log(res)
       dispatch({
         type: DETAIL_CONTACT,
         detail: res.data.data,
+        loading: false
       });
     })
     .catch((err) => {
-      console.log('err', err)
       dispatch({
         type: DETAIL_CONTACT,
         detail: null,
+        loading: false
       });
     })
   }
@@ -65,17 +76,17 @@ export function createContact(payload) {
 
     return Axios.post(`${apiConfig.baseUrl}contact`, data, config)
     .then((res) => {
-      console.log(res)
       dispatch({
         type: CREATE_CONTACT,
         message: res.data.message,
+        loading: false
       });
     })
     .catch((err) => {
-      console.log('err', err)
       dispatch({
         type: CREATE_CONTACT,
-        contacts: null,
+        message: null,
+        loading: false
       });
     })
   }
@@ -83,6 +94,11 @@ export function createContact(payload) {
 
 export function editContact(payload) {
   return (dispatch) => {
+    dispatch({
+      type: LOADING_DATA,
+      loading: true
+    })
+
     const config = { headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json'
@@ -99,35 +115,32 @@ export function editContact(payload) {
     
     return Axios.put(`${apiConfig.baseUrl}contact/${payload.id}`, data, config)
     .then((res) => {
-      console.log(res)
       dispatch({
         type: EDIT_CONTACT,
         message: res.data.message,
+        loading: false
       });
     })
     .catch((err) => {
-      console.log('err', err.message)
       dispatch({
         type: EDIT_CONTACT,
-        contacts: null,
+        message: null,
+        loading: false
       });
     })
   }
 }
 
 export function deleteContact(payload) {
-  console.log(payload)
   return (dispatch) => {
     return Axios.delete(`${apiConfig.baseUrl}contact/${payload.id}`)
     .then((res) => {
-      console.log(res)
       dispatch({
         type: DELETE_CONTACT,
         message: res.data.message,
       });
     })
     .catch((err) => {
-      console.log('err', err)
       dispatch({
         type: DELETE_CONTACT,
         contacts: null,

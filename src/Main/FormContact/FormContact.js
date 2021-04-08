@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image, Alert } from "react-native";
-import { Actions } from 'react-native-router-flux';
+import { View, Text, StyleSheet, TouchableOpacity, Image, Alert, ActivityIndicator } from "react-native";
 import {Formik} from 'formik';
 import * as _ from 'lodash';
 import { FormInput, Header } from '../../Components';
@@ -76,14 +75,13 @@ class FormContact extends Component {
               <TouchableOpacity
                 onPress={() => {
                   let url = this.generateImage(props.values)
-                  console.log(url)
                   props.setFieldValue('photo', url)
                 }}
                 style={{paddingHorizontal: 5, height: 35, borderRadius: 5, marginTop: 10, borderWidth: 1, borderColor: '#000', alignSelf: 'center', justifyContent: 'center', alignItems: 'center'}}>
                 <Text style={{textAlign: 'center'}}>Get New Avatar</Text>
               </TouchableOpacity>
               <FormInput
-                label={'Nama depan'}
+                label={'First name'}
                 p={props}
                 name={'firstName'}
                 value={props.values.firstName}
@@ -91,7 +89,7 @@ class FormContact extends Component {
                 placeholder={'Nama depan'}
               />
               <FormInput
-                label={'Nama belakang'}
+                label={'Last name'}
                 p={props}
                 name={'lastName'}
                 value={props.values.lastName}
@@ -99,23 +97,27 @@ class FormContact extends Component {
                 placeholder={'Nama belakang'}
               />
               <FormInput
-                label={'Usia'}
+                label={'Age'}
                 p={props}
                 name={'age'}
                 value={_.get(props.values,'age').toString()}
                 defaultValue={'17'}
-                placeholder={'Usia'}
+                placeholder={'0'}
                 keyboardType={'numeric'}
               />
               <TouchableOpacity
                 onPress={props.handleSubmit}
                 style={{height: 40, width: '90%', backgroundColor: '#000', marginTop: 30, borderRadius: 5, alignItems: 'center', justifyContent: 'center', alignSelf: 'center'}}
+                disabled={this.props.loading}
               >
-                <Text style={{color: '#fff'}}>SUBMIT</Text>
+                { this.props.loading ? <ActivityIndicator size={'small'} color={'#ccc'}/> :
+                  <Text style={{color: '#fff'}}>SUBMIT</Text>
+                }
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => this.props.onCancel()}
                 style={{height: 40, width: '90%', backgroundColor: '#fff', borderWidth: 1, borderColor: '#ddd', borderRadius: 5, marginVertical: 20, alignItems: 'center', justifyContent: 'center', alignSelf: 'center'}}
+                disabled={this.props.loading}
               >
                 <Text>CANCEL</Text>
               </TouchableOpacity>

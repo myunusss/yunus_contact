@@ -1,19 +1,18 @@
 import React, {Component} from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image, ActivityIndicator, Modal } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Image, Modal } from "react-native";
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import * as _ from 'lodash';
 import IconAws from 'react-native-vector-icons/FontAwesome';
-import { getDetailContact, deleteContact, createContact, editContact } from '../Redux/Actions/ContactActions';
-import { Divider, Header } from '../Components';
+import { getDetailContact, deleteContact, editContact } from '../Redux/Actions/ContactActions';
+import { Divider, Header, LoadingIndicator } from '../Components';
 import FormContact from './FormContact/FormContact';
 
 const mapStateToProps = (state, props) => {
-  console.log(state.contactReducer)
   return {
     counter: state.counter,
-    loading: state.contactReducer.loading,
-    detail: state.contactReducer.detail
+    detail: state.contactReducer.detail,
+    loading: state.contactReducer.loading
   }
 };
 
@@ -52,17 +51,13 @@ class Contact extends Component {
   constructor(props){
     super(props)
     this.state = {
-      loading: false,
-      visibleModalEditContact: false
+      visibleModalEditContact: false,
+      loadingForm: false
     }
   }
 
   componentDidMount() {
-    console.log('CONTACT',this.props.loading)
-    this.setState({loading: true})
-    this.props.getDetailContact(this.props.contact).then((res) => {
-      this.setState({loading: false})
-    })
+    this.props.getDetailContact(this.props.contact)
   }
 
   render() {
@@ -88,7 +83,7 @@ class Contact extends Component {
           }
         />
         {
-          this.state.loading && <ActivityIndicator size={'small'} color={'orange'} style={{margin: 20}}/>
+          this.props.loading && <LoadingIndicator/>
         }
         <View style={{backgroundColor: '#fff', borderRadius: 5, padding: 16, marginVertical: 10, marginHorizontal: 16}}>
           <View style={{flexDirection: 'row'}}>
@@ -138,14 +133,16 @@ class Contact extends Component {
           <FormContact
             title={'Edit Contact'}
             contact={this.props.detail}
+            loading={this.props.loading}
             onSubmit={(val) => {
               this.props.editContact(val).then((res) => {
-                this.setState({
-                  visibleModalEditContact: false
-                })
                 setTimeout(() => {
-                  this.props.getDetailContact(val)
-                }, 500);
+                  if (this.props.loading === false) {
+                    this.setState({
+                      visibleModalEditContact: false
+                    }, () => this.props.getDetailContact(val))
+                  }
+                }, 300);
               })
             }}
             onCancel={() => this.setState({visibleModalEditContact: false})}

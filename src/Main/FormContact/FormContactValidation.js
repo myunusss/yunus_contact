@@ -2,11 +2,11 @@ import * as Yup from 'yup';
 
 const contactValidation = Yup.object().shape({
   firstName: Yup.string()
-    .required('First name wajib diisi'),
+    .required('First name is required'),
   lastName: Yup.string()
-    .required('Last name wajib diisi'),
+    .required('Last name is required'),
   age: Yup.number()
-    .required('Usia wajib diisi').nullable(),
+    .required('Usia is required').nullable(),
 });
 
 export default contactValidation;
