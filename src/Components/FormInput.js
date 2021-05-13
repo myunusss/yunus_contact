@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, TextInput, Text } from 'react-native';
+import {View, TextInput, Text} from 'react-native';
 import FaIcon from "react-native-vector-icons/Feather";
 import ErrorText from './ErrorText';
 import * as _ from 'lodash';
@@ -17,7 +17,7 @@ const FormInput = (props) => {
     actionShowPassword,
     autoFocus,
     multiline,
-    maxLength
+    maxLength,
   } = props;
 
   return (
@@ -28,9 +28,7 @@ const FormInput = (props) => {
           <TextInput
             style={{height: multiline ? 80 : null, padding: 10, flex: 1, width: '100%', color: '#000'}}
             defaultValue={defaultValue}
-            value={
-              _.get(props, 'value') ? String(_.get(props, 'value')) : ''
-            }
+            value={_.get(props, 'value') ? String(_.get(props, 'value')) : ''}
             autoFocus={autoFocus || false}
             placeholder={placeholder}
             onChangeText={(val) => p.setFieldValue(name, val)}
