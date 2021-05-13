@@ -12,6 +12,7 @@
   "dependencies": {
     "@dicebear/avatars": "^4.5.4",
     "@dicebear/avatars-human-sprites": "^4.5.4",
+    "@react-native-community/geolocation": "^2.0.2",
     "axios": "^0.21.1",
     "formik": "^2.2.6",
     "lodash": "^4.17.21",
