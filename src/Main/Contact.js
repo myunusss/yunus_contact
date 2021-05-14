@@ -12,12 +12,12 @@ const mapStateToProps = (state, props) => {
   return {
     counter: state.counter,
     detail: state.contactReducer.detail,
-    loading: state.contactReducer.loading
-  }
+    loading: state.contactReducer.loading,
+  };
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return{
+  return {
     actionDeleteContact : (id) => {
       dispatch(deleteContact({id}));
     },
@@ -25,8 +25,8 @@ const mapDispatchToProps = (dispatch) => {
     getDetailContact : async (item) => {
       return new Promise((resolve) => {
         dispatch(getDetailContact({id: item.id}));
-        resolve(true)
-      })
+        resolve(true);
+      });
     },
 
     editContact : async (payload) => {
