@@ -12,27 +12,27 @@ const mapStateToProps = (state, props) => {
   return {
     counter: state.counter,
     contacts: state.contactReducer.contacts,
-    loading: state.contactReducer.loading
+    loading: state.contactReducer.loading,
   }
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return{
-    getDataContact : () => {
-      return new Promise((resolve) => {
+const mapDispatchToProps = dispatch => {
+  return {
+    getDataContact: () => {
+      return new Promise(resolve => {
         dispatch(getContact());
-        resolve(true)
-      })
+        resolve(true);
+      });
     },
 
-    createNewContact : (payload) => {
-      return new Promise((resolve) => {
+    createNewContact: payload => {
+      return new Promise(resolve => {
         dispatch(createContact(payload));
-        resolve(true)
-      })
+        resolve(true);
+      });
     },
-  }
-}
+  };
+};
 
 class Home extends Component {
   constructor(props){
@@ -40,12 +40,12 @@ class Home extends Component {
     this.state = {
       refresh: false,
       loadingForm: false,
-      visibleModalCreateContact: false
-    }
+      visibleModalCreateContact: false,
+    };
   }
 
   componentDidMount() {
-    this.props.getDataContact()
+    this.props.getDataContact();
   }
 
   render() {
